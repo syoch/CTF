@@ -1,0 +1,1 @@
+printf %s '  '\''e'\''"v"a"l" "$( ${@,}  p"r"i'\'''\''\ntf %s  '\''23- c- tuc | mus5dm | TUPNI$ ohce ;enod ;llun/ved/> mus5dm | TUPNI$ ohce ;i$ peels od ;)0001 1 qes($ ni i rof'\''  ${*##.}|${@%;}  re${@}v${*%%o1}  ${@%\`}   )" '

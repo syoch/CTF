@@ -1,0 +1,4 @@
+GhidraProject*
+**/.env
+.direnv
+__pycache__

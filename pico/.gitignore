@@ -1,0 +1,6 @@
+extractions/*
+*/build
+*/distfiles
+*/solve.log
+*/vuln
+*/flag.txt

@@ -1,0 +1,9 @@
+{
+  "cSpell.words": [
+    "Mino",
+    "recvline",
+    "sendlineafter"
+  ],
+  "python.analysis.typeCheckingMode": "standard",
+  "python.analysis.autoImportCompletions": true
+}
