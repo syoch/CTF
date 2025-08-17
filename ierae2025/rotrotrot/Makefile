@@ -1,5 +1,3 @@
-all:
-
 build/solve: solve.c
 	@mkdir -p $(@D)
 	gcc -o $@ $<
