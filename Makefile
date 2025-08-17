@@ -1,4 +1,3 @@
 all:
 
-include common/all.mk
-include pico/all.mk
+include $(wildcard */all.mk)
