@@ -1,0 +1,6 @@
+CompileFlags:
+  Add:
+    - -isystem
+    - /nix/store/dvvmiqi4yvwcgb54aiwgrlxy3hxvqir4-mingw-w64-x86_64-w64-mingw32-12.0.0-dev/include
+  CompilationDatabase: build
+  Compiler: x86_64-w64-mingw32-g++
