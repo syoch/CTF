@@ -21,6 +21,7 @@
           ropgadget
           rp
           binsider
+          gdb
 
           # Utilities
           cmake
@@ -38,6 +39,7 @@
             ps: with ps; [
               jupyter
               numpy
+              sympy
               matplotlib
               pwntools
               fastecdsa
