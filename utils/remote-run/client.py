@@ -11,6 +11,8 @@ def main():
         reply, a = s.recvfrom(1)
         print(f"Reply: {reply} from {a}")
 
+        print("-" * 50)
+
         while True:
             msg, _ = s.recvfrom(1024)
             op = msg[0]
@@ -24,6 +26,7 @@ def main():
                     else:
                         print("\\x{:02X}".format(b), end="")
             elif op == 0x81:  # End
+                print("-" * 50)
                 print("")
                 break
 
