@@ -49,7 +49,7 @@
               gmpy2
               pypng
               galois
-              sage
+              tqdm
               pycryptodome
               z3
               (ps.buildPythonPackage {
@@ -66,6 +66,20 @@
             ]
           ))
         ];
+        shellHook = ''
+          # Find CTF directory with matching .envrc
+          function find_ctf_dir() {
+            local dir="$PWD"
+            while [ "$dir" != "/" ]; do
+              if [ -f "$dir/.envrc" ]; then
+                echo "$dir"
+                return
+              fi
+              dir="$(dirname "$dir")"
+            done
+          }
+          export PYTHONPATH=$PYTHONPATH:`find_ctf_dir`/common
+        '';
       };
     };
 }

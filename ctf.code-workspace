@@ -16,6 +16,9 @@
 			"**/Thumbs.db": true,
 			"utils/peb-inspect": true,
 		},
+		"python.analysis.extraPaths": [
+			"/home/syoch/ghq/github.com/syoch/CTF/common"
+		],
 		"clangd.arguments": [
 			"--enable-config"
 		]
