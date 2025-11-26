@@ -8,7 +8,9 @@
     { nixpkgs, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+      };
     in
     {
       devShells.${system}.default = pkgs.mkShell {
@@ -24,11 +26,13 @@
           rp
           binsider
           gdb
+          frida-tools
 
           # Utilities
           cmake
           unzip
           p7zip
+          sage
 
           # Windows Integration
           pkgsCross.mingwW64.buildPackages.gcc
@@ -36,7 +40,6 @@
 
           # Python things
           ruff
-          sage
 
           (python313.withPackages (
             ps: with ps; [
