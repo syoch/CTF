@@ -12,15 +12,25 @@
         inherit system;
       };
     in
-    {
+    rec {
+      packages.${system} = {
+        flatter = pkgs.callPackage ./pkgs/flatter.nix { };
+        msolve = pkgs.callPackage ./pkgs/msolve.nix { };
+
+        RsaCtfTool = pkgs.python313Packages.callPackage ./pkgs/RsaCtfTool.nix { };
+        cuso = pkgs.python313Packages.callPackage ./pkgs/cuso.nix {
+          sage = pkgs.sage.lib;
+        };
+      };
+
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           qemu-user
           steam-run-free
           openssl_3_5
           clang-tools
-          flint3
 
+          # Rev/Pwn tools
           one_gadget
           ropgadget
           rp
@@ -28,11 +38,16 @@
           gdb
           frida-tools
 
+          # Cryptography tools
+          sage
+          singular
+          (packages.${system}.flatter)
+          flint3
+
           # Utilities
           cmake
           unzip
           p7zip
-          sage
 
           # Windows Integration
           pkgsCross.mingwW64.buildPackages.gcc
@@ -55,17 +70,9 @@
               tqdm
               pycryptodome
               z3
-              (ps.buildPythonPackage {
-                pname = "RsaCtfTool";
-                version = "1.0.0";
-                format = "setuptools";
-                src = fetchFromGitHub {
-                  owner = "RsaCtfTool";
-                  repo = "RsaCtfTool";
-                  rev = "master";
-                  sha256 = "sha256-xttrOyStaTy6ZoL+2S3oVbEidiq0hukKDZsN0WM4Zdw=";
-                };
-              })
+              sage.lib
+              packages.${system}.RsaCtfTool
+              packages.${system}.cuso
             ]
           ))
         ];
@@ -75,7 +82,7 @@
             local dir="$PWD"
             while [ "$dir" != "/" ]; do
               if [ -f "$dir/.envrc" ]; then
-                echo "$dir"
+                echo "$dir"{a}
                 return
               fi
               dir="$(dirname "$dir")"
