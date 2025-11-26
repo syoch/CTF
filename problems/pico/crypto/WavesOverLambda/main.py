@@ -1,5 +1,5 @@
-from syoch_ctf.substitute_attack.charset import CharMap
-from syoch_ctf.substitute_attack.solver import Solver
+from syoch_ctf.data_processor.charmap import CharMap
+from syoch_ctf.crypto.substitute_solver import SubstituteSolver as Solver
 
 
 S = """
@@ -27,19 +27,17 @@ atco ta yp.
 
 def main():
     solver = Solver(S)
-    initial_map = CharMap
-    initial_map = add_word_mapping(initial_map, "rtsmcvpn", "congrats", verbose=True)
-    initial_map = add_word_mapping(initial_map, "pzd", "the", verbose=True)
-    initial_map = add_word_mapping(initial_map, "zdcd", "here", verbose=True)
-    initial_map = add_word_mapping(initial_map, "yn", "is", verbose=True)
-    initial_map = add_word_mapping(initial_map, "jthc", "your", verbose=True)
-    initial_map = add_word_mapping(initial_map, "auvm", "flag", verbose=True)
-    initial_map = add_word_mapping(initial_map, "tldc", "over", verbose=True)
-    initial_map = add_word_mapping(initial_map, "uvoebv", "lambda", verbose=True)
-    initial_map = add_word_mapping(initial_map, "acdqhdsrj", "frequency", verbose=True)
-    initial_map = add_word_mapping(
-        initial_map, "vffvcdspuj", "apparently", verbose=True
-    )
+    initial_map = CharMap()
+    initial_map.add_word_mapping("rtsmcvpn", "congrats", verbose=True)
+    initial_map.add_word_mapping("pzd", "the", verbose=True)
+    initial_map.add_word_mapping("zdcd", "here", verbose=True)
+    initial_map.add_word_mapping("yn", "is", verbose=True)
+    initial_map.add_word_mapping("jthc", "your", verbose=True)
+    initial_map.add_word_mapping("auvm", "flag", verbose=True)
+    initial_map.add_word_mapping("tldc", "over", verbose=True)
+    initial_map.add_word_mapping("uvoebv", "lambda", verbose=True)
+    initial_map.add_word_mapping("acdqhdsrj", "frequency", verbose=True)
+    initial_map.add_word_mapping("vffvcdspuj", "apparently", verbose=True)
     decoded = solver.solve(initial_map=initial_map)
 
     s = set()
@@ -56,17 +54,9 @@ def main():
             print("All words are mapped.")
         else:
             print(f"Unmapped word: {unmapped}")
-            tab = charmap_to_translate_table(charmap)
-            trans_tab = str.maketrans(tab)
             print("Translated text:")
-            print(unmapped.translate(trans_tab))
-
-
-def test():
-    s = is_all_translatable("kypz", "fdrebp_u_y_vgsmtqcnola__ih")
-    print(s)
+            print(charmap.translate_text(unmapped))
 
 
 if __name__ == "__main__":
-    # test()
     main()

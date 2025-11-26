@@ -1,23 +1,17 @@
-from .charset import (
-    CharMap,
-    EMPTY_MAP,
-    charmap_to_translate_table,
-    is_all_translatable,
-    find_words_with_pattern,
-)
-
 from typing import Generator
 
+from syoch_ctf.data_processor.charmap import CharMap
+from syoch_ctf.data_processor.pattern import find_words_with_pattern
 
-class Solver:
-    def __init__(self, ciphertext: str):
-        self.ciphertext = ciphertext
+
+class SubstituteSolver:
+    def __init__(self, cipher_text: str):
+        self.ciphertext = cipher_text
+        self.words = set(
+            word for word in self.ciphertext.split() if all(c.isalpha() for c in word)
+        )
         self.sorted_words = sorted(
-            set(
-                word
-                for word in self.ciphertext.split()
-                if all(c.isalpha() for c in word)
-            ),
+            self.words,
             key=len,
             reverse=True,
         )
@@ -30,7 +24,7 @@ class Solver:
         for word in self.sorted_words:
             if len(word) > max_length:
                 continue
-            if not is_all_translatable(word, current_charmap):
+            if not current_charmap.is_all_translatable(word):
                 word_to_process = word
                 break
         if word_to_process is None:
@@ -46,7 +40,7 @@ class Solver:
             yield current_charmap
             return
 
-        pattern = find_words_with_pattern(word_to_process, current_charmap)
+        pattern = find_words_with_pattern(self.words, word_to_process, current_charmap)
         if not pattern:
             return
 
@@ -65,13 +59,11 @@ class Solver:
             find_max_length -= 1
 
     def solve(
-        self, initial_map: CharMap = EMPTY_MAP
+        self, initial_map: CharMap = CharMap()
     ) -> Generator[tuple[CharMap, str], None, None]:
         word_max_length = max(len(word) for word in self.sorted_words)
         print(f"Max word length: {word_max_length}")
 
         for charmap in self.charmaps(word_max_length, initial_map=initial_map):
-            decoded = self.ciphertext.translate(
-                str.maketrans(charmap_to_translate_table(charmap))
-            )
+            decoded = charmap.translate_text(self.ciphertext)
             yield charmap, decoded

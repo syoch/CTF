@@ -1,5 +1,4 @@
-from syoch_ctf.substitute_attack.charset import CharMap
-from syoch_ctf.substitute_attack.pattern import find_words_with_pattern
+from syoch_ctf.data_processor.charmap import CharMap
 from pwn import remote
 
 

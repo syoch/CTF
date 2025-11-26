@@ -24,7 +24,6 @@ def require_file(file_name: str, url: str, executable: bool = False) -> None:
         os.chmod(file_name, 0o755)
         print(f"Made {file_name} executable.")
 
-
 def url_process(url: str) -> process:
     """
     Start a process for the given URL.

@@ -1,5 +1,5 @@
 import string
-from syoch_ctf.substitute_attack.charset import CharMap
+from syoch_ctf.data_processor.charmap import CharMap
 
 
 def word_matches_pattern(word: str, pattern: str, char_map: CharMap) -> CharMap | None:

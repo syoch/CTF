@@ -2,45 +2,54 @@ import asyncio
 import subprocess
 import urllib.request
 
-# win-vm:30000
-# EXE_SERVER = "100.115.215.47:30000"
-
-# HOST = "100.124.120.123"  # win-vm
-# HOST = "100.115.215.47"  # syoch-nix
-# PORT = 31000
+from .protocol import Protocol
+from .packets import ExecutionRequest, Packet, ProgramLog, StartedExecution
 
 
-class DaemonProtocol:
+class DaemonUDPProtocol(asyncio.DatagramProtocol):
     def __init__(self, exe_server: str) -> None:
+        super().__init__()
         self.exe_server = exe_server
+        self.proto = Protocol.default_protocol()
+
+    def send_packet(self, packet: Packet, addr: tuple[str, int]):
+        data = self.proto.pack_packet(packet)
+        self.transport.sendto(data, addr)
 
     def connection_made(self, transport: asyncio.DatagramTransport):
         self.transport = transport
 
     def datagram_received(self, data: bytes, addr: tuple[str, int]):
-        opcode = data[0]
-        print(f"Received opcode: {opcode} from {addr}")
+        packet = self.proto.parse_packet(data)
+        if packet is None:
+            print(f"Received unknown packet from {addr}")
+            return
 
-        if opcode == 0x00:  # Execute peb-inspect
-            url_path = data[1:].decode()
-            self.transport.sendto(b"\x80", addr)  # Accept
+        if isinstance(packet, ExecutionRequest):
+            url_path = packet.path
+
+            exe_name = url_path.split("/")[-1]
 
             url = f"http://{self.exe_server}/{url_path}"
-            print(f"Downloading {url} --> a.exe")
-            urllib.request.urlretrieve(url, "a.exe")
+            print(f"Downloading {url} --> {exe_name}")
+            urllib.request.urlretrieve(url, exe_name)
 
-            print("Executing a.exe")
+            print(f"Executing {exe_name}")
+            self.send_packet(StartedExecution(exe_name=exe_name), addr)
             try:
                 output = subprocess.check_output(
-                    "a.exe; echo $?", stderr=subprocess.STDOUT, shell=True
+                    f"{exe_name}; echo $?", stderr=subprocess.STDOUT, shell=True
                 )
             except subprocess.CalledProcessError as e:
                 output = e.output
 
             # sendto addr with 64byte chunked
             for i in range(0, len(output), 64):
-                self.transport.sendto(b"\x88" + output[i : i + 64], addr)
-            self.transport.sendto(b"\x81", addr)  # End-Program
+                chunk = output[i : i + 64]
+                self.send_packet(ProgramLog(exe_name=exe_name, log_data=chunk), addr)
+
+            print("Execution finished")
+            self.send_packet(StartedExecution(exe_name=exe_name), addr)
 
 
 async def server(listen_on: tuple[str, int], exe_server: str):
@@ -48,7 +57,7 @@ async def server(listen_on: tuple[str, int], exe_server: str):
 
     print(f"Listening on {listen_on[0]}:{listen_on[1]}")
     transport, _ = await loop.create_datagram_endpoint(
-        lambda: DaemonProtocol(exe_server),  # type: ignore
+        lambda: DaemonUDPProtocol(exe_server),  # type: ignore
         local_addr=listen_on,
     )
 

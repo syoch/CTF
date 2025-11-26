@@ -1,5 +1,5 @@
 from typing import Generator
-from . import it
+from .. import it
 
 Placement = tuple[int, int, int, int]
 
