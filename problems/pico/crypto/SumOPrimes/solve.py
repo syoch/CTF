@@ -1,25 +1,6 @@
-from binascii import hexlify
-from gmpy2 import (
-    mpz_urandomb,
-    next_prime,
-    random_state,
-    isqrt,
-    mpz,
-    get_context,
-    log,
-    lcm,
-)
-
-import os
+from gmpy2 import isqrt, mpz, get_context
 
 get_context().precision = 8192
-
-SEED = int(hexlify(os.urandom(32)).decode(), 16)
-STATE = random_state(SEED)
-
-
-def get_prime(bits):
-    return next_prime(mpz_urandomb(STATE, bits) | (1 << (bits - 1)))
 
 
 x = mpz(
@@ -31,19 +12,17 @@ n = mpz(
 c = mpz(
     0x16ACF84A73CEFD321ED491A15C640A495B09050CDCE435EC37442FAF9A694775E1EBFFB6DBAD6133CBC54E3F641506B0613F711625594FCB467F915F2708714B4C9936F5F4752C3299157CFF4EB68EB82C0054DAE351314829974F4FEADAF126CDA92B97E348DBEF2640EC3A729A064E615DF73D644700F93BF87579683E253D29622525BEA3644F59AAC8E0B2553BFEA48D99E9B323E03CBF55166659974EB8C51CC7B2C2C5D6AA6C01B056A8ED7283D96656A3496F266726605AF1BE139D586F208D4D7C59C2771DC8036D490D3672EE4513301002775D7C39EAC421C6CB4F01344E061549A4CB11C057ACCEF1726572E447501004C772EC91B4A55811280F
 )
-# p + q = x <==> q = x - p
-# pq = n
-# p(x-p) = n
-# px-p^2-n = 0
-# p^2 - xp + n = 0
-# p = x/2 + isqrt(x^2 - 4n)/2
+
+# p + q = x, pq = n
+# p^2 - xp + n = 0 (p can be q as well)
+# p = x/2 + isqrt(x^2 - 4*n)/2
 p = mpz(x / 2 + isqrt(x**2 - 4 * n) / 2)
 assert n % p == 0
 
 q = x - p
 e = 65537
 
-phi = lcm(p - 1, q - 1)
+phi = (p - 1) * (q - 1)
 d = pow(e, -1, phi)
 
 m = int(pow(c, d, n))
