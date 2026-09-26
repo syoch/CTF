@@ -6,10 +6,16 @@ from pwn import process
 
 def require_file(file_name: str, url: str, executable: bool = False) -> None:
     """
-    Ensure that a file exists by downloading it from the specified URL if it does not exist.
+    ファイルを確認し、存在しない場合は指定されたURLからダウンロードする。
+    また、executable が True の場合は、ファイルに実行権限を付与する。
 
-    :param file_name: The name of the file to check or download.
-    :param url: The URL to download the file from if it does not exist.
+    Args:
+        file_name (str): 確認するファイル名
+        url (str): ファイルをダウンロードするURL
+        executable (bool): ファイルに実行権限を付与するかどうか
+
+    Returns:
+        None
     """
     if not os.path.exists(file_name):
         response = requests.get(url)
@@ -21,15 +27,19 @@ def require_file(file_name: str, url: str, executable: bool = False) -> None:
         print(f"{file_name} already exists.")
 
     if executable and not os.access(file_name, os.X_OK):
-        os.chmod(file_name, 0o755)
+        os.chmod(file_name, 0o755)  # NOSONAR
         print(f"Made {file_name} executable.")
+
 
 def url_process(url: str) -> process:
     """
-    Start a process for the given URL.
+    指定されたURLからファイルをダウンロードし、実行可能にしてからプロセスとして起動する。
 
-    :param url: The URL to process.
-    :return: The process object.
+    Args:
+        url (str): ファイルをダウンロードするURL
+
+    Returns:
+        process: 起動したプロセスのオブジェクト
     """
 
     require_file(

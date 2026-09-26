@@ -1,4 +1,15 @@
 def continued_fraction(numer: int, denom: int):
+    """分数を連分数に展開する
+    Args:
+        numer (int): 分子
+        denom (int): 分母
+    Returns:
+        list[int]: 連分数の係数のリスト
+
+    Example:
+        >>> continued_fraction(7, 3)
+        [2, 3]
+    """
     a = []
     while denom != 0:
         a.append(numer // denom)
@@ -7,6 +18,16 @@ def continued_fraction(numer: int, denom: int):
 
 
 def contract(a):
+    """連分数を分数に縮約する
+    Args:
+        a (list[int]): 連分数の係数のリスト
+    Returns:
+        list[int]: 分数の分子と分母のリスト [numer, denom]
+
+    Example:
+        >>> contract([2, 3])
+        [7, 3]
+    """
     if len(a) == 1:
         return [a[0], 1]
     else:

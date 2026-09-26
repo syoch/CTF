@@ -7,6 +7,6 @@
     owner = "RsaCtfTool";
     repo = "RsaCtfTool";
     rev = "master";
-    sha256 = "sha256-xttrOyStaTy6ZoL+2S3oVbEidiq0hukKDZsN0WM4Zdw=";
+    sha256 = "sha256-x4B+oDcyuWddDvXXw0hjr0CaQCbystlVPGGDpkhgryY=";
   };
 })

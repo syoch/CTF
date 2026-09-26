@@ -1,6 +1,5 @@
-from base64 import b64decode
 from sys import argv
-from gmpy2 import *
+from gmpy2 import invert
 
 
 def parse_hex_string(hex_string):

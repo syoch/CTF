@@ -3,7 +3,26 @@ from syoch_ctf.data_processor.charmap import CharMap
 
 
 def word_matches_pattern(word: str, pattern: str, char_map: CharMap) -> CharMap | None:
-    char_map = char_map
+    """
+    単語が指定されたパターンに一致するかどうかを確認し、一致する場合は更新された CharMap を返す。
+
+    Args:
+        word (str): 確認する単語
+        pattern (str): パターン文字列
+        char_map (CharMap): 現在の文字マッピング
+    Returns:
+        CharMap | None: 単語がパターンに一致する場合は更新された CharMap を返す。一致しない場合は None を返す。
+    例:
+        word = "hello"
+        pattern = "abccd"
+        char_map = CharMap()
+        result = word_matches_pattern(word, pattern, char_map)
+        if result is not None:
+            print("The word matches the pattern.")
+        else:
+            print("The word does not match the pattern.")
+        # --> The word matches the pattern.
+    """
     for p_char, w_char in zip(pattern, word.lower()):
         if w_char in string.punctuation + string.whitespace:
             continue
@@ -27,15 +46,15 @@ def find_words_with_pattern(
     words: set[str], pattern: str, char_map: CharMap
 ) -> set[tuple[str, CharMap]]:
     """
-    Finds words matching the given pattern.
+    指定されたパターンに一致する単語を見つける
 
-    Arguments:
-        pattern: A string pattern where same letters represent the same character
-                 and different letters represent different characters.
-                 For example, "abba" would match "noon" but not "nope".
+    Args:
+        words (set[str]): 単語の集合
+        pattern (str): パターン文字列
+        char_map (CharMap): 現在の文字マッピング
 
     Returns:
-        A set of words matching the pattern.
+        set[tuple[str, CharMap]]: パターンに一致する単語と更新された CharMap のタプルの集合
     """
     matching_words = set()
     for word in words:

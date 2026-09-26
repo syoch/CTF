@@ -1,0 +1,85 @@
+Spawning `BI3.exe`...
+Instrumenting...
+Target module: BI3.exe (0x7ff75ef00000 - 0x7ff75ef7b000)
+Attaching to CallHash5
+CreateFileA: Loaded handler at "/home/syoch/ghq/github.com/syoch/CTF/problems/picoctf2026/Binary Instrumentation 3/__handlers__/C__Windows_System32_KERNEL32.DLL/CreateFileA.js"
+WriteFile: Loaded handler at "/home/syoch/ghq/github.com/syoch/CTF/problems/picoctf2026/Binary Instrumentation 3/__handlers__/C__Windows_System32_KERNEL32.DLL/WriteFile.js"
+CreateProcessA: Loaded handler at "/home/syoch/ghq/github.com/syoch/CTF/problems/picoctf2026/Binary Instrumentation 3/__handlers__/C__Windows_System32_KERNEL32.DLL/CreateProcessA.js"
+Started tracing 3 functions. Web UI available at http://localhost:44455/
+Entered CallHash5 with arguments: 0x0, 0x400000, 0x0, 0x1, 0x0
+Leaving CallHash5 with return value: 0xc0000019
+Entered CallHash5 with arguments: 0x0, 0x1697e200000, 0x1f7d7ef8f0, 0x0, 0x1f7d7ef8f0
+Dumping structure at 0x1f7d7ef8f0:
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ef8f0  00 00 00 00 00 00 00 00 03 00 00 40 00 00 00 00  ...........@....
+1f7d7ef900  00 30 4c 00 00 00 00 00 00 00 00 00 00 00 00 00  .0L.............
+1f7d7ef910  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef920  50 51 6f 7e 69 01 00 00 07 23 f0 5e f7 7f 00 00  PQo~i....#.^....
+Leaving CallHash5 with return value: 0x1f7d7ef8f0
+WriteFile(0x60, 0x1f7d7ed940, 0x1, 0x1f7d7ed908, 0x0)
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ed940  5b                                               [
+WriteFile(0x60, 0x1f7d7ed970, 0x16, 0x1f7d7ed938, 0x0)
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ed970  2b 5d 20 4c 65 74 20 6d 65 20 67 65 74 20 73 74  +] Let me get st
+1f7d7ed980  61 72 74 65 64 21                                arted!
+WriteFile(0x60, 0x1f7d7ed9e0, 0x2, 0x1f7d7ed9a8, 0x0)
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ed9e0  0d 0a                                            ..
+CreateFileA(C:\random\output_flag.txt, 0x40000000, 0x1, 0x1f7d7ef780, 0x2, 0x80, 0x0)
+CreateFileA returned 0x2ac
+CreateProcessA:
+  lpApplicationName: null
+  lpCommandLine: cmd.exe /c echo testing if redirection works
+  lpProcessAttributes: 0x0
+  lpThreadAttributes: 0x0
+  bInheritHandles: 0x1
+  dwCreationFlags: 0x0
+  lpEnvironment: 0x0
+  lpCurrentDirectory: null
+  lpStartupInfo: 0x1f7d7ef6f0
+  STARTUPINFOA:
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ef6f0  68 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  h...............
+1f7d7ef700  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef710  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef720  00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00  ................
+1f7d7ef730  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef740  00 00 00 00 00 00 00 00 0a 00 00 00 00 00 00 00  ................
+1f7d7ef750  ac 02 00 00 00 00 00 00                          ........
+      GetStdHandle address: 0x7ffcb54f7d20
+  lpProcessInformation: 0x1f7d7ef6d0
+CreateProcessA returned 0x1
+CreateProcessA:
+  lpApplicationName: null
+  lpCommandLine: cmd.exe /c echo cGljb0NURns0MTFfNHIzXzRwMTVfbjA3aDFuOV8zbDUzXzhlMjgxNGZhfQo=
+  lpProcessAttributes: 0x0
+  lpThreadAttributes: 0x0
+  bInheritHandles: 0x1
+  dwCreationFlags: 0x0
+  lpEnvironment: 0x0
+  lpCurrentDirectory: null
+  lpStartupInfo: 0x1f7d7ef6f0
+  STARTUPINFOA:
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ef6f0  68 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  h...............
+1f7d7ef700  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef710  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef720  00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00  ................
+1f7d7ef730  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+1f7d7ef740  00 00 00 00 00 00 00 00 ac 02 00 00 00 00 00 00  ................
+1f7d7ef750  64 00 00 00 00 00 00 00                          d.......
+      GetStdHandle address: 0x7ffcb54f7d20
+  lpProcessInformation: 0x1f7d7ef6d0
+CreateProcessA returned 0x1
+WriteFile(0x60, 0x1f7d7ed940, 0x1, 0x1f7d7ed908, 0x0)
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ed940  5b                                               [
+WriteFile(0x60, 0x1f7d7ed970, 0x14, 0x1f7d7ed938, 0x0)
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ed970  2b 5d 20 49 20 74 68 69 6e 6b 20 49 20 77 6f 72  +] I think I wor
+1f7d7ed980  6b 65 64 21                                      ked!
+WriteFile(0x60, 0x1f7d7ed9e0, 0x2, 0x1f7d7ed9a8, 0x0)
+             0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123456789ABCDEF
+1f7d7ed9e0  0d 0a                                            ..
+Process terminated

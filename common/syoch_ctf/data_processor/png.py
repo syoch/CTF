@@ -6,7 +6,16 @@ Chunk = tuple[bytes, bytes]
 
 
 def read_png(png_data: bytes) -> Generator[Chunk]:
-    # hdr = png_data[0:8]
+    """
+    PNGファイルのチャンクを読み取る
+
+    Args:
+        png_data (bytes): PNGファイルのバイト列
+
+    Yields:
+        Chunk: チャンクの名前とデータのタプル
+    """
+
     png_data = png_data[8:]
 
     while png_data:
@@ -20,6 +29,16 @@ def read_png(png_data: bytes) -> Generator[Chunk]:
 
 
 def get_pixels_left(row_data: bytes) -> Generator[Pixel]:
+    """
+    PNGの行データからピクセルを取得する (Left モード)
+
+    Args:
+        row_data (bytes): PNGの行データ
+
+    Yields:
+        Pixel: ピクセルのタプル (R, G, B, A)
+    """
+
     current_pixel: Pixel = (0, 0, 0, 0)
 
     while row_data:

@@ -1,4 +1,13 @@
 def caesar(text: str, shift: int) -> str:
+    """シーザー暗号の処理を行う
+
+    Args:
+        text (str): 処理対象の文字列
+        shift (int): シフト値
+
+    Returns:
+        str: 処理後の文字列
+    """
     result = ""
     for ch in text:
         if ch.islower():
@@ -11,7 +20,7 @@ def caesar(text: str, shift: int) -> str:
     return result
 
 
-def main():
+if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Caesar cipher tool")
@@ -24,7 +33,3 @@ def main():
 
     processed_text = caesar(args.text, args.shift)
     print(processed_text)
-
-
-if __name__ == "__main__":
-    main()

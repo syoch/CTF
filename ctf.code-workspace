@@ -21,6 +21,10 @@
 		],
 		"clangd.arguments": [
 			"--enable-config"
-		]
+		],
+
+		"chat.tools.terminal.autoApprove": {
+			"/.*/": true // Auto approve all terminal commands
+		}
 	}
 }

@@ -1,7 +1,13 @@
-from typing import Generator
+from typing import Iterable
 
 
-def bits2bytes(bits: Generator[int]) -> bytes:
+def bits2bytes(bits: Iterable[int]) -> bytes:
+    """
+    ビット列をバイト列に変換する
+
+    Args:
+        bits (Iterable[int]): ビット列 (0 または 1 の整数のイテラブル)
+    """
     byte = 0
     count = 0
 

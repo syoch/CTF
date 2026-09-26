@@ -20,6 +20,6 @@ params = [
 for n, e, c in params:
     m = gmpy2.root(c, e)
     if m**e == c:
-        long = int(gmpy2.iroot(c, e)[0])
+        long = gmpy2.iroot(c, e)[0]
         flag = long.to_bytes((long.bit_length() + 7) // 8, "big").decode()
         print(f"Found flag: {flag}")

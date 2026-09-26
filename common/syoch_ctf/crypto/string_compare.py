@@ -1,4 +1,14 @@
 def string_compare(s1: str, s2: str):
+    """2つの文字列を比較し、各文字の差分とXORの差分を表示する
+
+    Args:
+        s1 (str): 比較対象の文字列1
+        s2 (str): 比較対象の文字列2
+
+    Returns:
+        None
+
+    """
     for c1, c2 in zip(s1, s2):
         c1 = c1.upper()
         c2 = c2.upper()

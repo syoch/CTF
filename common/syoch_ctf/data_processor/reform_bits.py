@@ -7,6 +7,16 @@ Placement = tuple[int, int, int, int]
 def reform_bits(
     bits: Generator[int], switch: int, placement: Placement
 ) -> Generator[int]:
+    """
+    ビット列を再構成する
+
+    Args:
+        bits (Generator[int]): ビット列のジェネレーター
+        switch (int): 4ビットのスイッチ値 (0 なら反転なし, 1 なら反転あり)
+        placement (Placement): ビットの配置を指定するタプル (0-3 のインデックス)
+    Yields:
+        int: 再構成されたビット列
+    """
     s0 = switch >> 3
     s1 = (switch >> 2) & 1
     s2 = (switch >> 1) & 1

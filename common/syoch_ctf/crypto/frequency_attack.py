@@ -5,6 +5,14 @@ FREQUENCY_ORDER = "etaoinshrdlcumwfgypbvkjxqz"
 
 
 def analyze_frequency(text: str) -> dict[str, int]:
+    """アルファベットについて頻度解析を行う
+
+    Args:
+        text (str): 解析対象の文字列
+
+    Returns:
+        dict[str, int]: 文字の頻度を表す辞書
+    """
     frequency = {}
     for ch in text.lower():
         if ch.isalpha():
@@ -12,24 +20,37 @@ def analyze_frequency(text: str) -> dict[str, int]:
     return frequency
 
 
-def frequency_attack_with_caesar(text: str) -> None:
+def frequency_attack_with_caesar(text: str) -> int | None:
+    """シーザー暗号について、頻度解析攻撃を行う。
+    暗号文中で最も頻度の高い文字を 'e' に対応させるシフト値を返却する。
+
+    Args:
+        text (str): 暗号文
+
+    Returns:
+        int | None: 推定されるシフト値。暗号文中にアルファベットが含まれない場合は None を返却する。
+    """
+
     frequency = analyze_frequency(text)
     sorted_chars = sorted(frequency.items(), key=lambda item: item[1], reverse=True)
     if not sorted_chars:
         print("No alphabetic characters found in the text.")
-        return
+        return None
 
     most_frequent_char = sorted_chars[0][0]
     assumed_shift = (ord(most_frequent_char) - ord("e")) % 26
-
-    print(f"Most frequent character in ciphertext: '{most_frequent_char}'")
-    print(f"Assumed shift (to map '{most_frequent_char}' to 'e'): {assumed_shift}")
-    decrypted_text = caesar(text, -assumed_shift)
-    print("Decrypted text with assumed shift:")
-    print(decrypted_text)
+    return assumed_shift
 
 
-def frequency_attack(text: str) -> None:
+def frequency_attack(text: str) -> str:
+    """単一換字式暗号 (英文) の頻度解析攻撃
+
+    Args:
+        text (str): 暗号文
+
+    Returns:
+        str: 復号文
+    """
     frequency = analyze_frequency(text)
     sorted_chars = sorted(frequency.items(), key=lambda item: item[1], reverse=True)
 
@@ -39,8 +60,7 @@ def frequency_attack(text: str) -> None:
 
     decrypted_text = charmap.translate_text(text)
 
-    print("Decrypted text using frequency analysis:")
-    print(decrypted_text)
+    return decrypted_text
 
 
 def main():
@@ -55,9 +75,20 @@ def main():
     )
     args = parser.parse_args()
     if args.caesar:
-        frequency_attack_with_caesar(args.text)
+        assumed_shift = frequency_attack_with_caesar(args.text)
+        if not assumed_shift:
+            print("No alphabetic characters found in the text.")
+            return
+        most_frequent_char = chr((assumed_shift + ord("e")) % 26 + ord("a"))
+        print(f"Most frequent character in ciphertext: '{most_frequent_char}'")
+        print(f"Assumed shift (to map '{most_frequent_char}' to 'e'): {assumed_shift}")
+        decrypted_text = caesar(args.text, -assumed_shift)
+        print("Decrypted text with assumed shift:")
+        print(decrypted_text)
     else:
-        frequency_attack(args.text)
+        decrypted_text = frequency_attack(args.text)
+        print("Decrypted text:")
+        print(decrypted_text)
 
 
 if __name__ == "__main__":

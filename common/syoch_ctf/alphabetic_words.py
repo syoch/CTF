@@ -4,6 +4,9 @@ WORDS_URL = "https://github.com/dwyl/english-words/raw/refs/heads/master/words.t
 
 
 def get_alphabetic_words(words_file: str) -> set[str]:
+    """
+    指定されたファイルからアルファベットのみの単語を取得する
+    """
     require_file(words_file, WORDS_URL)
 
     with open(words_file, "r") as f:
