@@ -25,24 +25,24 @@
 
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
-          qemu-user
-          steam-run-free
-          openssl_3_5
-          clang-tools
+          # qemu-user
+          # steam-run-free
+          # openssl_3_5
+          # clang-tools
 
           # Rev/Pwn tools
           one_gadget
           ropgadget
           rp
-          binsider
+          # binsider
           gdb
-          frida-tools
+          # frida-tools
 
           # Cryptography tools
-          sage
-          singular
-          (packages.${system}.flatter)
-          flint3
+          # sage
+          # singular
+          # (packages.${system}.flatter)
+          # flint3
 
           # Utilities
           cmake
@@ -50,8 +50,8 @@
           p7zip
 
           # Windows Integration
-          pkgsCross.mingwW64.buildPackages.gcc
-          powershell
+          # pkgsCross.mingwW64.buildPackages.gcc
+          # powershell
 
           # Python things
           ruff
@@ -71,7 +71,7 @@
               pycryptodome
               z3
               sage.lib
-              packages.${system}.RsaCtfTool
+              # packages.${system}.RsaCtfTool
               packages.${system}.cuso
             ]
           ))
